@@ -17,11 +17,11 @@ class PersonMasker:
 
     def __init__(self):
 
-        self.model_ = YOLO("yolov8n-seg.pt")
+        self.model_ = YOLO("yolov8m-seg.pt")
         self.bridge_ = CvBridge()
         rospy.Subscriber("/camera/color/image_raw", Image, self.imageCallback)
     
-        self.mask_pub_ = "/image/masked", Image, queue_size=2)
+        self.mask_pub_ = rospy.Publisher("/image/masked", Image, queue_size=2)
 
     def imageCallback(self, msg : Image) -> None:
         cv_image = self.bridge_.imgmsg_to_cv2(msg, "bgr8")
@@ -42,7 +42,7 @@ class PersonMasker:
                         mask = masks[i] if masks is not None else None
                         m_arr = mask.data.cpu().numpy()
                         m_img = cv2.bitwise_and(cv_image, m_arr)
-                        
+                        print("person detected") 
                         m_msg = self.bridge_.cv2_to_imgmsg(m_img, 'bgr8')
                         m_msg.header = msg.header
                         self.mask_pub_.publish(m_msg)
