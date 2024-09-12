@@ -22,8 +22,8 @@ docker run --rm -it --gpus all \
     -e QT_X11_NO_MITSHM=1 \
     -e XAUTHORITY=$XAUTH \
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-    -v "/home/jasonah/detection/yolov8-ros:/home/`whoami`/ws/src/yolov8-ros" \
-    -v "/dtc/DTC_2024:/home/`whoami`/data" \
+    -v "/home/jason/dtc-dev/yolov8-ros:/home/`whoami`/ws/src/yolov8-ros" \
+    -v "/home/jason/ROS/bags:/home/`whoami`/data" \
     --name dtc-jackal-phobos-masking \
     dtc-jackal-phobos:masking \
     bash
